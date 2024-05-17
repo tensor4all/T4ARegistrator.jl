@@ -1,6 +1,6 @@
 name = "T4ARegistrator"
 uuid = "52e3f0f8-52ab-4798-a033-7b9fb81451b4"
-authors = ["SatoshiTerasaki <terasakisatoshi.math@gmail.com>"]
+authors = ["tensor4all group"]
 version = "0.0.1"
 
 [deps]
