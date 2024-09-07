@@ -8,7 +8,7 @@ The new version is written directly to the `project_file`.
 function updateversion!(
     project::Pkg.Types.Project,
     project_file::AbstractString,
-    mode::Symbol
+    mode::Symbol,
 )
     isnothing(project.version) && (project.version = v"0.1.0")
     mode === :patch && (project.version = Base.nextpatch(project.version::VersionNumber))

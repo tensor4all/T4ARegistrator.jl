@@ -19,16 +19,15 @@ Register `package::Module`. If `package` is omitted, register the package in
 the currently active project or in the current directory in case the
 active project is not a package.
 """
-function register(package::Union{Module,Nothing}=nothing)
+function register(package::Union{Module,Nothing} = nothing)
     package_dir = find_package_path(package)
+    project_dir = dirname(project_file)
 
     repo = LibGit2.GitRepo(package_dir)
     current_branch = LibGit2.branch(repo)
-    current_branch in ["main", "master"] || error(
-        """You are working on "$(current_branch)". 
-        Please checkout on the default branch i.e., "main" or "master".
-        """,
-    )
+    current_branch in ["main", "master"] || error("""You are working on "$(current_branch)".
+                                                  Please checkout on the default branch i.e., "main" or "master".
+                                                  """)
 
     d = Dict()
     for project_file in Base.project_names
@@ -50,14 +49,15 @@ function register(package::Union{Module,Nothing}=nothing)
     branch = "register-$(name)-$(v)"
     LocalRegistry.register(
         package_dir;
-        registry="git@github.com:tensor4all/T4ARegistry.git",
-        branch=branch,
-        commit=true,
-        push=true,
+        registry = "git@github.com:tensor4all/T4ARegistry.git",
+        branch = branch,
+        commit = true,
+        push = true,
     )
 
     @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
-    basebranch = read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
+    basebranch =
+        read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
     @info "gh pr create --base \"$(basebranch)\" --head \"$(branch)\" --delete-branch"
 end
 
