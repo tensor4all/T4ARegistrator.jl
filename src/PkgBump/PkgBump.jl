@@ -58,9 +58,7 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
             @info "Push to origin..."
             run(`git -C $(project_dir) push --set-upstream origin $branch`)
             @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
-            basebranch =
-                read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |>
-                chomp |> basename
+            basebranch = readchomp(`git -C . rev-parse --abbrev-ref HEAD`) # e.g., main or master
             @info "gh pr create --base $(basebranch) --head $(branch) --title \"Bump version to $(new_version)\" --body \"This PR updates version to $(new_version)\""
             @info "Hint: you can merge the pull request via GitHub CLI:"
             @info "gh pr merge $(branch) --merge --auto --delete-branch"
