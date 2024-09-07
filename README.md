@@ -30,9 +30,7 @@ $ julia> using T4ARegistrator
 $ julia> bumppatch()  # Updates version from 'x.y.z' to 'x.y.(z+1)'.
 ```
 
-It will create a new pull request to TensorCrossinterpolation.jl that updates `Project.toml`
-
-This will create a pull request to TensorCrossinterpolation.jl that updates the version number in `Project.toml`.
+It will modify `Project.toml` to update the version of TensorCrossinterpolation.jl. By default, it will push changes to remote repository tensor4all/TensorCrossinterpolation.jl with a branch named "pkgbump/bump-to-version-<new_version>". You can disable this behaviour by setting `bumppatch(push=false)`.
 
 Additional options:
 
@@ -50,5 +48,33 @@ $ cd <path/to/TensorCrossinterpolation.jl>
 $ julia --project=@. `using T4ARegistrator; register()`
 ```
 
-This will create a pull request to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4ARegistry) to register the new version of TensorCrossinterpolation.jl.
+This will register to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4ARegistry) with branch named "register-<package name>-<new version>".
 
+# GitHub CLI
+
+[GitHub CLI](https://cli.github.com/) a.k.a `gh` command provides a convenient way to create/meger PR automatically.
+
+## Using GitHub CLI Command to create a new pull request automatically
+
+Here is an example of how to use GitHub CLI to create a new pull request.
+
+```sh
+$ git switch -c update-readme
+$ git add README.md
+$ git commit -m "Update README.md"
+$ git push origin update-readme
+$ gh pr create --base main --title "Improve README.md" --body "This PR updates README.md"
+
+Creating pull request for terasaki/improve-readme into main in tensor4all/T4ARegistrator.jl
+
+https://github.com/tensor4all/T4ARegistrator.jl/pull/9
+```
+
+## Using GitHub CLI Command to merge submitted PR automatically
+
+Continuation of the above section, you can merge the PR into the main branch automatically.
+
+```sh
+$ gh pr merge --merge --auto
+✓ Pull request tensor4all/T4ARegistrator.jl#9 will be automatically merged when all requirements are met
+```
