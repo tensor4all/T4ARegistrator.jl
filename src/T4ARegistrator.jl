@@ -65,7 +65,7 @@ function register(package::Union{Module,Nothing} = nothing)
     registry_path, _ = LocalRegistry.check_git_registry(registry_path, gitconfig)
     new_package = !LocalRegistry.has_package(registry_path, pkg)
     if new_package
-        package_repo = LocalRegistry.get_remote_repo(package_path, gitconfig)
+        package_repo = LocalRegistry.get_remote_repo(package_dir, gitconfig)
     else
         package_repo = ""
     end
