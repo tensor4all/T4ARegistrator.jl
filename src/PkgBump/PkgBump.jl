@@ -58,6 +58,9 @@ function bump(mode::Symbol; commit::Bool=true, push::Bool=true)::Nothing
         if push
             @info "Push to origin..."
             run(`git -C $(project_dir) push --set-upstream origin $branch`)
+            @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
+            basebranch = read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
+            @info "gh pr create --base \"$(basebranch)\" --head \"$(branch)\" --title \"Bump version\" --body \"This PR updates version to $(new_version)\""
         else
             @info "Skipped git push ... since push keyword is set to $(push)"
         end

@@ -48,13 +48,17 @@ function register(package::Union{Module,Nothing}=nothing)
     end
     v = VersionNumber(version)
     branch = "register-$(name)-$(v)"
-    return LocalRegistry.register(
+    LocalRegistry.register(
         package_dir;
         registry="git@github.com:tensor4all/T4ARegistry.git",
         branch=branch,
         commit=true,
         push=true,
     )
+
+    @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
+    basebranch = read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
+    @info "gh pr create --base \"$(basebranch)\" --head \"$(branch)\" --title \"Bump version\" --body \"This PR updates version to $(v)\""
 end
 
 end
