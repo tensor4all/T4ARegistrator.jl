@@ -57,7 +57,9 @@ function register(package::Union{Module,Nothing} = nothing)
     @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
     basebranch =
         read(`git -C $(package_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp |> basename
-    @info "gh pr create --base $(basebranch) --head $(branch) --delete-branch"
+    @info "gh pr create --base $(basebranch) --head $(branch)"
+    @info "Hint: you can merge the pull request via GitHub CLI:"
+    @info "gh pr merge $(branch) --merge --auto --delete-branch"
 end
 
 end
