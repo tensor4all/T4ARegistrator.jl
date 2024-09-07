@@ -74,4 +74,5 @@ Continuation of the above section, you can merge the PR into the main branch aut
 
 ```sh
 $ gh pr merge --merge --auto
+✓ Pull request tensor4all/T4ARegistrator.jl#9 will be automatically merged when all requirements are met
 ```
