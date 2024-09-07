@@ -61,7 +61,7 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
             basebranch =
                 read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |>
                 chomp |> basename
-            @info "gh pr create --base $(basebranch) --head $(branch) --title \"Bump version\" --body \"This PR updates version to $(new_version)\""
+            @info "gh pr create --base $(basebranch) --head $(branch) --title \"Bump version to $(new_version)\" --body \"This PR updates version to $(new_version)\""
             @info "Hint: you can merge the pull request via GitHub CLI:"
             @info "gh pr merge $(branch) --merge --auto --delete-branch"
         else
