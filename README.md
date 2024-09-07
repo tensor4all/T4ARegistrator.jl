@@ -60,10 +60,17 @@ This will register to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4A
 $ git switch -c update-readme
 $ git add README.md
 $ git commit -m "Update README.md"
+$ git push origin update-readme
 $ gh pr create --base main --title "Improve README.md" --body "This PR updates README.md"
+
+Creating pull request for terasaki/improve-readme into main in tensor4all/T4ARegistrator.jl
+
+https://github.com/tensor4all/T4ARegistrator.jl/pull/9
 ```
 
 ## Using GitHub CLI Command to merge submitted PR automatically
+
+Continuation of the above section, you can merge the PR into the main branch automatically.
 
 ```sh
 $ gh pr merge --merge --auto
