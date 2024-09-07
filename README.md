@@ -56,6 +56,8 @@ This will register to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4A
 
 ## Using GitHub CLI Command to create a new pull request automatically
 
+Here is an example of how to use GitHub CLI to create a new pull request.
+
 ```sh
 $ git switch -c update-readme
 $ git add README.md
