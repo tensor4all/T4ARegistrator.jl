@@ -12,7 +12,7 @@ include("versionupdate.jl")
 
 Bumps the version of the current active project according to `mode`, commits the change to a new branch, and pushes the branch to the remote repository.
 """
-function bump(mode::Symbol; commit::Bool=true, push::Bool=true)::Nothing
+function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
     mode ∈ [:patch, :minor, :major] ||
         error("Expected one of [:patch, :minor, :major], actual $(mode)")
 
@@ -21,11 +21,10 @@ function bump(mode::Symbol; commit::Bool=true, push::Bool=true)::Nothing
     project_dir = dirname(project_file)
     repo = LibGit2.GitRepo(project_dir)
     current_branch = LibGit2.branch(repo)
-    current_branch in ["main", "master"] || error(
-        """You are working on "$(current_branch)". 
-        Please checkout on the default branch i.e., "main" or "master".
-        """,
-    )
+    current_branch in ["main", "master"] ||
+        error("""You are working on "$(current_branch)". 
+              Please checkout on the default branch i.e., "main" or "master".
+              """)
 
     if commit
         !LibGit2.isdirty(repo) ||
@@ -58,6 +57,11 @@ function bump(mode::Symbol; commit::Bool=true, push::Bool=true)::Nothing
         if push
             @info "Push to origin..."
             run(`git -C $(project_dir) push --set-upstream origin $branch`)
+            @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
+            basebranch =
+                read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |>
+                chomp
+            @info "gh pr create --base \"$(basebranch)\" --head \"$(branch)\" --title \"Bump version\" --body \"This PR updates version to $(new_version)\" --delete-branch"
         else
             @info "Skipped git push ... since push keyword is set to $(push)"
         end
