@@ -21,7 +21,6 @@ active project is not a package.
 """
 function register(package::Union{Module,Nothing} = nothing)
     package_dir = find_package_path(package)
-    project_dir = dirname(project_file)
 
     repo = LibGit2.GitRepo(package_dir)
     current_branch = LibGit2.branch(repo)
@@ -57,7 +56,7 @@ function register(package::Union{Module,Nothing} = nothing)
 
     @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
     basebranch =
-        read(`git -C $(project_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
+        read(`git -C $(package_dir) rev-parse --abbrev-ref origin/HEAD`, String) |> chomp
     @info "gh pr create --base \"$(basebranch)\" --head \"$(branch)\" --delete-branch"
 end
 
