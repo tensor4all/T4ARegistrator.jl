@@ -50,7 +50,7 @@ function register(package::Union{Module,Nothing} = nothing)
     end
     v = VersionNumber(version)
     branch = "register-$(name)-$(v)"
-    registry = "git@github.com:tensor4all/T4ARegistry.git"
+    registry = "https://github.com/tensor4all/T4ARegistry.git"
 
     LocalRegistry.register(
         package_dir;
