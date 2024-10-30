@@ -28,6 +28,7 @@ function register(package::Union{Module,Nothing} = nothing)
     current_branch in ["main", "master"] || error("""You are working on "$(current_branch)".
                                                   Please checkout on the default branch i.e., "main" or "master".
                                                   """)
+    defaultbranch = copy(current_branch)
 
     d = Dict()
     local pkg
@@ -71,14 +72,13 @@ function register(package::Union{Module,Nothing} = nothing)
     end
 
     @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
-    basebranch = readchomp(`git -C . rev-parse --abbrev-ref HEAD`) # e.g., main or master
 
     pr_title = "$(LocalRegistry.commit_title(pkg, new_package))"
 
     tree_hash, _, _ = LocalRegistry.get_tree_hash(package_dir, gitconfig)
 
     pr_body = "UUID: $(pkg.uuid)\nRepo: $(package_repo)\nTree: $(string(tree_hash))"
-    command = "gh pr create --repo tensor4all/T4ARegistry --base $(basebranch) --head $(branch) --title \"$(pr_title)\" --body \"$(pr_body)\""
+    command = "gh pr create --repo tensor4all/T4ARegistry --base $(defaultbranch) --head $(branch) --title \"$(pr_title)\" --body \"$(pr_body)\""
     println(command)
     @info "Hint: you can merge the pull request via GitHub CLI:"
     println("gh pr merge --repo tensor4all/T4ARegistry $(branch) --merge --auto --delete-branch")
