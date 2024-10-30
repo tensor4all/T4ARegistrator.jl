@@ -28,7 +28,7 @@ function register(package::Union{Module,Nothing} = nothing)
     current_branch in ["main", "master"] || error("""You are working on "$(current_branch)".
                                                   Please checkout on the default branch i.e., "main" or "master".
                                                   """)
-    defaultbranch = copy(current_branch)
+    defaultbranch = deepcopy(current_branch)
 
     d = Dict()
     local pkg
