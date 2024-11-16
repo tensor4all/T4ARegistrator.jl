@@ -25,6 +25,7 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
         error("""You are working on "$(current_branch)".
               Please checkout on the default branch i.e., "main" or "master".
               """)
+    defaultbranch = deepcopy(current_branch)
 
     if commit
         !LibGit2.isdirty(repo) ||
@@ -58,8 +59,7 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
             @info "Push to origin..."
             run(`git -C $(project_dir) push --set-upstream origin $branch`)
             @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
-            basebranch = readchomp(`git -C . rev-parse --abbrev-ref HEAD`) # e.g., main or master
-            @info "gh pr create --base $(basebranch) --head $(branch) --title \"Bump version to $(new_version)\" --body \"This PR updates version to $(new_version)\""
+            @info "gh pr create --base $(defaultbranch) --head $(branch) --title \"Bump version to $(new_version)\" --body \"This PR updates version to $(new_version)\""
             @info "Hint: you can merge the pull request via GitHub CLI:"
             @info "gh pr merge $(branch) --merge --auto --delete-branch"
         else
