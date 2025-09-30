@@ -45,7 +45,7 @@ Here's how to do it:
 
 ```sh
 $ cd <path/to/TensorCrossinterpolation.jl>
-$ julia --project=@. `using T4ARegistrator; register()`
+$ julia --project=@. -e 'using T4ARegistrator; register()'
 ```
 
 This will register to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4ARegistry) with branch named "register-<package name>-<new version>".
