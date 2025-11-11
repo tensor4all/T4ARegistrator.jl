@@ -39,6 +39,7 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
     new_version = project.version
     @info "Update version from $(current_version) to $(new_version)"
 
+    branch = ""  # Initialize branch variable
     try
         if commit
             branch = "pkgbump/bump-to-version-$(new_version)"
@@ -56,6 +57,9 @@ function bump(mode::Symbol; commit::Bool = true, push::Bool = true)::Nothing
         end
 
         if push
+            if !commit || branch == ""
+                error("Cannot push without committing. Set commit=true to enable push.")
+            end
             @info "Push to origin..."
             run(`git -C $(project_dir) push --set-upstream origin $branch`)
             @info "Hint: you can create a new pull request to GitHub repository via GitHub CLI:"
