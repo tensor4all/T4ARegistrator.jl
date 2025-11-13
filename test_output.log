@@ -1,0 +1,85 @@
+Stale dependencies: Test Failed at /Users/hiroshi/.julia/packages/Aqua/MCcFg/src/stale_deps.jl:31
+  Expression: isempty(stale_deps)
+   Evaluated: isempty(Base.PkgId[Base.PkgId(Base.UUID("c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"), "JET"), Base.PkgId(Base.UUID("8dfed614-e22c-5e08-85e1-65c5234f0b40"), "Test"), Base.PkgId(Base.UUID("4c88cf16-eb10-579e-8560-4a9242c79595"), "Aqua")])
+
+Stacktrace:
+ [1] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Test/src/Test.jl:680 [inlined]
+ [2] test_stale_deps(pkg::Base.PkgId; kwargs::@Kwargs{})
+   @ Aqua ~/.julia/packages/Aqua/MCcFg/src/stale_deps.jl:31
+ [3] test_stale_deps
+   @ ~/.julia/packages/Aqua/MCcFg/src/stale_deps.jl:29 [inlined]
+ [4] #test_stale_deps#26
+   @ ~/.julia/packages/Aqua/MCcFg/src/stale_deps.jl:35 [inlined]
+ [5] test_stale_deps
+   @ ~/.julia/packages/Aqua/MCcFg/src/stale_deps.jl:34 [inlined]
+ [6] macro expansion
+   @ ~/.julia/packages/Aqua/MCcFg/src/Aqua.jl:94 [inlined]
+ [7] macro expansion
+   @ ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+ [8] test_all(testtarget::Module; ambiguities::Bool, unbound_args::Bool, undefined_exports::Bool, project_extras::Bool, stale_deps::Bool, deps_compat::Bool, piracies::Bool, persistent_tasks::Bool, undocumented_names::Bool)
+   @ Aqua ~/.julia/packages/Aqua/MCcFg/src/Aqua.jl:94
+┌ Warning: `target_defined_modules::Bool` configuration is deprecated.
+│ Please use `target_modules` instead and specify the modules you want to target with e.g. `target_modules=(pkgmod,)`
+└ @ JET ~/.julia/packages/JET/E3oAN/src/analyzers/jetanalyzer.jl:1683
+Code linting (JET.jl): JET-test failed at /Users/hiroshi/.julia/packages/JET/E3oAN/src/JETBase.jl:1334
+  Expression: (JET.report_package)(T4ARegistrator; toplevel_logger = nothing, target_defined_modules = true)
+  ═════ 4 possible errors found ═════
+  ┌ read_project_meta(package_dir::String) @ T4ARegistrator /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/src/T4ARegistrator.jl:56
+  │ local variable `pkg` may be undefined: pkg::RegistryTools.Project
+  └────────────────────
+  ┌ read_project_meta(package_dir::String) @ T4ARegistrator /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/src/T4ARegistrator.jl:59
+  │ local variable `pkg` may be undefined: pkg::RegistryTools.Project
+  └────────────────────
+  ┌ read_project_meta(package_dir::String) @ T4ARegistrator /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/src/T4ARegistrator.jl:62
+  │ local variable `pkg` may be undefined: pkg::RegistryTools.Project
+  └────────────────────
+  ┌ read_project_meta(package_dir::String) @ T4ARegistrator /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/src/T4ARegistrator.jl:69
+  │ local variable `pkg` may be undefined: pkg::RegistryTools.Project
+  └────────────────────
+  
+register_manual: Error During Test at /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/test/test_register_manual.jl:6
+  Got exception outside of a @test
+  ArgumentError: Input string is too short, use `GitShortHash` for partial hashes
+  Stacktrace:
+    [1] LibGit2.GitHash(id::String)
+      @ LibGit2 ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/LibGit2/src/oid.jl:42
+    [2] checkout!(repo::GitRepo, commit::String; force::Bool)
+      @ LibGit2 ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/LibGit2/src/LibGit2.jl:514
+    [3] checkout!(repo::GitRepo, commit::String)
+      @ LibGit2 ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/LibGit2/src/LibGit2.jl:495
+    [4] top-level scope
+      @ ~/projects/JuliaUmbrella/T4ARegistrator.jl/test/test_register_manual.jl:8
+    [5] macro expansion
+      @ ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+    [6] macro expansion
+      @ ~/projects/JuliaUmbrella/T4ARegistrator.jl/test/test_register_manual.jl:42 [inlined]
+    [7] include(mapexpr::Function, mod::Module, _path::String)
+      @ Base ./Base.jl:307
+    [8] top-level scope
+      @ ~/projects/JuliaUmbrella/T4ARegistrator.jl/test/runtests.jl:7
+    [9] macro expansion
+      @ ~/.julia/juliaup/julia-1.12.1+0.aarch64.apple.darwin14/share/julia/stdlib/v1.12/Test/src/Test.jl:1776 [inlined]
+   [10] macro expansion
+      @ ~/projects/JuliaUmbrella/T4ARegistrator.jl/test/runtests.jl:33 [inlined]
+   [11] include(mod::Module, _path::String)
+      @ Base ./Base.jl:306
+   [12] exec_options(opts::Base.JLOptions)
+      @ Base ./client.jl:317
+   [13] _start()
+      @ Base ./client.jl:550
+Test Summary:                                  | Pass  Fail  Error  Total   Time
+T4ARegistrator.jl                              |   11     2      1     14  12.2s
+  Code quality (Aqua.jl)                       |    5     1             6   7.4s
+    Unbound type parameters                    |    1                   1   0.0s
+    Undefined exports                          |    1                   1   0.0s
+    Compare Project.toml and test/Project.toml |    1                   1   0.0s
+    Stale dependencies                         |          1             1   1.8s
+    Piracy                                     |    1                   1   0.0s
+    Persistent tasks                           |    1                   1   3.7s
+  Code linting (JET.jl)                        |          1             1   4.3s
+  Helper functions                             |    6                   6   0.0s
+  register_manual                              |                 1      1   0.4s
+RNG of the outermost testset: Random.Xoshiro(0x01deed9f3e6319ed, 0xd0c1cbc04b42489d, 0xa47b11b9d9cc4f4b, 0xfcf8f0e2c6bd3c4e, 0x955a3fb4d054265d)
+ERROR: LoadError: Some tests did not pass: 11 passed, 2 failed, 1 errored, 0 broken.
+in expression starting at /Users/hiroshi/projects/JuliaUmbrella/T4ARegistrator.jl/test/runtests.jl:6
