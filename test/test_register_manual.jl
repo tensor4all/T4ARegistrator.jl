@@ -51,6 +51,60 @@ using TOML
         @test compat isa Dict
     end
     
+    @testset "fix_compat_toml_format" begin
+        # Test case 1: String array representation should be converted to actual array
+        compat_data1 = Dict(
+            "[0]" => Dict(
+                "BitIntegers" => "0.3.5 - 0.3",
+                "QuanticsGrids" => "[0.3, 0.6]",
+                "T4ATensorCI" => "0.10",
+                "julia" => "1.6.0 - 1"
+            )
+        )
+        fixed1 = T4ARegistrator.fix_compat_toml_format(compat_data1)
+        @test fixed1["[0]"]["BitIntegers"] == "0.3.5 - 0.3"  # Regular string, unchanged
+        @test fixed1["[0]"]["QuanticsGrids"] == ["0.3", "0.6"]  # Converted to array
+        @test fixed1["[0]"]["T4ATensorCI"] == "0.10"  # Regular string, unchanged
+        @test fixed1["[0]"]["julia"] == "1.6.0 - 1"  # Regular string, unchanged
+        
+        # Test case 2: Already correct format (array) should remain unchanged
+        compat_data2 = Dict(
+            "[0]" => Dict(
+                "EllipsisNotation" => "1",
+                "QuanticsTCI" => "0.7",
+                "SparseIR" => ["0.96 - 0.97", "1"],
+                "StaticArrays" => "1",
+                "T4APartitionedMPSs" => "0.7.3 - 0.7",
+                "julia" => "1"
+            )
+        )
+        fixed2 = T4ARegistrator.fix_compat_toml_format(compat_data2)
+        @test fixed2["[0]"]["EllipsisNotation"] == "1"
+        @test fixed2["[0]"]["QuanticsTCI"] == "0.7"
+        @test fixed2["[0]"]["SparseIR"] == ["0.96 - 0.97", "1"]  # Already array, unchanged
+        @test fixed2["[0]"]["StaticArrays"] == "1"
+        @test fixed2["[0]"]["T4APartitionedMPSs"] == "0.7.3 - 0.7"
+        @test fixed2["[0]"]["julia"] == "1"
+        
+        # Test case 3: Empty array string
+        compat_data3 = Dict(
+            "[0]" => Dict(
+                "SomePackage" => "[]"
+            )
+        )
+        fixed3 = T4ARegistrator.fix_compat_toml_format(compat_data3)
+        @test fixed3["[0]"]["SomePackage"] == String[]
+        
+        # Test case 4: Multiple version sections
+        compat_data4 = Dict(
+            "[0]" => Dict("julia" => "1"),
+            "[\"0.1.0\"]" => Dict("SomePackage" => "[0.1, 0.2]")
+        )
+        fixed4 = T4ARegistrator.fix_compat_toml_format(compat_data4)
+        @test fixed4["[0]"]["julia"] == "1"
+        @test fixed4["[\"0.1.0\"]"]["SomePackage"] == ["0.1", "0.2"]
+    end
+    
     # Note: Full register_manual() test would require:
     # - A mock registry or test registry
     # - Network access or mocking git operations
