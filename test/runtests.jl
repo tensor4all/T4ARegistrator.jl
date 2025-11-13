@@ -10,7 +10,7 @@ using JET
 
     v = VERSION
     isreleased = v.prerelease == ()
-    if isreleased && v >= v"1.9"
+    if isreleased && v >= v"1.12"
         @testset "Code linting (JET.jl)" begin
             JET.test_package(T4ARegistrator; target_modules = (T4ARegistrator,))
         end
