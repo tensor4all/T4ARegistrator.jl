@@ -50,6 +50,19 @@ $ julia --project=@. -e 'using T4ARegistrator; register()'
 
 This will register to [tensor4all/T4ARegistry](https://github.com/tensor4all/T4ARegistry) with branch named "register-<package name>-<new version>".
 
+# Create PR and Enable Auto-merge Automatically (optional)
+
+If you have GitHub CLI (`gh`) installed and authenticated, you can ask `register()` to create a PR and enable GitHub auto-merge:
+
+```sh
+$ cd <path/to/TensorCrossinterpolation.jl>
+$ julia --project=@. -e 'using T4ARegistrator; register(; create_pr=true, auto_merge=true)'
+```
+
+Notes:
+- This runs `gh pr create` and then `gh pr merge --auto` for `tensor4all/T4ARegistry`.
+- The base branch is detected from the cloned registry (`origin/HEAD`), with a fallback to `main`.
+
 # GitHub CLI
 
 [GitHub CLI](https://cli.github.com/) a.k.a `gh` command provides a convenient way to create/meger PR automatically.
