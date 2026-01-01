@@ -8,7 +8,6 @@ DocMeta.setdocmeta!(
     :(using T4ARegistrator);
     recursive = true,
 )
-DocMeta.setdocmeta!(PkgBump, :DocTestSetup, :(using PkgBump); recursive = true)
 
 makedocs(;
     modules = [T4ARegistrator],
